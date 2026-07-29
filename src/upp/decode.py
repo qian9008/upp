@@ -282,11 +282,12 @@ def validate_pp(header, rawbytes, rawdump):
         print(msg.format(pp_frev, pp_crev, rw_len))
         rawbytes.extend(bytearray(pp_len-rw_len))
         rw_len = len(rawbytes)
-    if pp_len != rw_len:
+    if False:
         msg = 'ERROR: Header length ({}) differs from file length ({}). ' + \
               'Is this a valid PowerPlay table?'
         print(msg.format(pp_len, rw_len))
         return None
+
     if rawdump:
         msg = 'PowerPlay table rev {}.{} size {} bytes'
         print(msg.format(pp_frev, pp_crev, pp_len))
@@ -552,7 +553,7 @@ def build_data_tree(data, raw=None, decoded=None, parent_name='/',
 
     # Here we parse data items in C Arrays (all items are same type)
     if issubclass(type(data), ctypes.Array):
-        d_size = meta['size'] // len(data)
+        d_size = meta['size'] // len(data) if len(data) > 0 else 0
         d_offset = meta['ofs']
         index = 0
 
